@@ -1,12 +1,23 @@
+import argparse
+
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 
+parser = argparse.ArgumentParser(description='Tạo report từ dữ liệu EMG RAW.')
+parser.add_argument(
+    'csv_file',
+    nargs='?',
+    default='emg_raw_dataset.csv',
+    help='Đường dẫn CSV (mặc định: emg_raw_dataset.csv)',
+)
+args = parser.parse_args()
+
 try:
     # Đọc dữ liệu CSV vừa tạo
-    df = pd.read_csv('emg_raw_dataset.csv')
+    df = pd.read_csv(args.csv_file)
 except Exception as e:
-    print("Chưa tìm thấy file 'emg_raw_dataset.csv'. Hãy chạy file 1_collect_data.py trước!")
+    print(f"Không đọc được file '{args.csv_file}'. Hãy kiểm tra đường dẫn và định dạng CSV.")
     exit()
 
 # Cấu hình giao diện đồ thị
