@@ -1,1 +1,4 @@
 dataset/kaggle/DS1_EMG_SIGNALS_AVERAGE/*.mat
+artifacts/
+__pycache__/
+csv_data

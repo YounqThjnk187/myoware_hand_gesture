@@ -1,0 +1,36 @@
+Oct 5:
+Quy trình đề xuất
+    1. Bắt đầu từ Mov1–Mov5 hoặc EMG_DB để chủ động kiểm tra và xử lý tín hiệu thô. 
+    Mỗi MovK được mô tả có 400 repetition, 3 kênh, 4500 mẫu mỗi kênh, lấy mẫu 1000 Hz. 
+    Gán nhãn theo file Mov tương ứng. Không nên bắt đầu bằng EMG_S cho tới khi kiểm tra 
+    được nhãn của từng cửa sổ, thứ tự trục và cách phân đoạn; tài liệu chỉ cho biết các 
+    cửa sổ dài 200 mẫu, overlap 80%.
+
+    2. Kiểm tra các khoảng thực hiện đúng bằng metadata/range trong .tdms, nếu có thể liên 
+    kết rõ với từng repetition. Một trial dài 4,5 giây không có nghĩa toàn bộ 4,5 giây đều 
+    là lúc người tham gia giữ cử chỉ. Tránh đưa đoạn chuyển động vào/ra cử chỉ vào nhãn cố 
+    định nếu những đoạn đó không được gán đúng.
+
+    3. Chia train/validation/test theo người tham gia trước khi tạo cửa sổ. Đây là điểm quan 
+    trọng để tránh rò rỉ dữ liệu: các cửa sổ chồng lấn 50% từ cùng một repetition rất giống 
+    nhau. Nếu chia ngẫu nhiên từng cửa sổ, kết quả test có thể cao giả tạo. Mô tả dataset 
+    nói có 20 người, nhưng cần xác minh thứ tự repetition và liên kết với .tdms trước khi 
+    dùng ID người để chia. Nếu chưa xác minh được, không nên gọi phép chia là 
+    “subject-independent”.
+
+    4. Xử lý tín hiệu theo cấu hình báo cáo: thử notch 50 Hz và bandpass 20–450 Hz trên dữ 
+    liệu 1000 Hz; nên so sánh có/không notch vì nhiễu điện lưới của dataset vốn được giảm 
+    nhờ thiết bị chạy pin. Dùng cùng một kiểu lọc nhân quả khi huấn luyện và khi chạy thực tế.
+
+    5. Cắt cửa sổ và trích đặc trưng: thử cửa sổ 200 ms, bước 100 ms như báo cáo. Bộ đặc trưng 
+    MAV, RMS, WL, ZC trên 3 kênh tạo vector 12 chiều. Có thể so sánh với mô hình nhận trực 
+    tiếp cửa sổ thô, nhưng đó là một nhánh thí nghiệm khác.
+
+    6. Huấn luyện và đánh giá: lấy Min-Max chỉ từ train; so sánh LDA/SVM/RF hoặc các mô hình 
+    báo cáo chọn; dùng macro-F1 và confusion matrix, ngoài accuracy. Để đánh giá người dùng 
+    mới, dùng chia nhóm theo subject hoặc Group CV sau khi ID subject đã được xác minh. Báo 
+    cáo riêng kết quả theo từng cử chỉ vì các nhãn có thể khó ngang nhau.
+
+    7. Đo thời gian thực riêng với độ trễ cửa sổ: thời gian tính toán lọc + đặc trưng + suy luận 
+    là một phép đo; thời gian cần để thu đủ cửa sổ 200 ms là một phần khác. Không nên chỉ báo 
+    cáo inference latency rồi kết luận toàn hệ thống phản hồi dưới 100 ms.

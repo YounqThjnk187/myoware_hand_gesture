@@ -1,0 +1,48 @@
+This dataset contains surface electromyography (sEMG) signals recorded from twenty healthy subjects performing five hand gestures.
+The data were collected from three EMG channels placed on the dominant forearm (anterior forearm, posterior forearm, and anterior radius), with a sampling rate of 1000 Hz.
+
+The five gestures performed were:
+
+1.- Bending of all fingers in a fist gesture
+
+2.- Bending of the thumb
+
+3.- Rest position
+
+4.- Extension of the five fingers
+
+5.- Bending of the middle and ring fingers
+
+Each subject performed the gestures with an average force, completing 20 repetitions per gesture (a total of 100 samples per subject).
+
+The dataset was acquired using a battery-powered acquisition system, which minimized electrical noise.
+The signals were only analog filtered, allowing users to apply their own digital processing or feature extraction algorithms depending on the application.
+
+The dataset includes raw and pre-processed EMG signals, intended for training and evaluating artificial intelligence algorithms.
+It can be used for developing or benchmarking models that require a large dataset for accurate gesture and force classification in EMG-based systems.
+
+Dataset Structure
+The dataset contains seven .mat files and twenty .tdms files, organized as follows:
+
+EMG_DB:
+Raw EMG signals from the 20 subjects, containing 2000 samples × 3 channels × 4500 data points.
+Every 400 samples correspond to one gesture, in ascending order from gesture 1 (fist) to gesture 5 (rest).
+
+EMG_S:
+EMG signals with window segmentation, each window having a 200 ms length and 80% overlap.
+This file contains 174,000 windows × 3 channels × 200 data points.
+
+Mov1 – Mov5:
+Raw signals of each gesture acquisition, each containing 400 samples × 3 channels × 4500 data points.
+
+-Mov1: first gesture acquisition
+
+-Mov2: second gesture acquisition
+
+-Mov3: third gesture acquisition
+
+-Mov4: fourth gesture acquisition
+
+-Mov5: fifth gesture acquisition
+
+Each .tdms file contains the raw data of one subject’s gestures and indicates the ranges corresponding to correctly performed samples.

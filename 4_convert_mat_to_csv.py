@@ -24,17 +24,17 @@ def convert_file(mat_path, csv_path):
     signal = mat_data[movement_name]
     if signal.ndim != 3 or signal.shape[1] != 3:
         raise ValueError(
-            f"{mat_path} has shape {signal.shape}; expected (samples, 3, trials)"
+            f"{mat_path} has shape {signal.shape}; expected (trials, 3, samples)"
         )
 
-    sample_count, channel_count, trial_count = signal.shape
+    trial_count, channel_count, sample_count = signal.shape
     csv_path.parent.mkdir(parents=True, exist_ok=True)
     with csv_path.open("w", newline="", encoding="utf-8") as output_file:
         writer = csv.writer(output_file)
         writer.writerow(["sample", "trial", "channel_1", "channel_2", "channel_3"])
         for trial_index in range(trial_count):
             for sample_index in range(sample_count):
-                values = signal[sample_index, :, trial_index]
+                values = signal[trial_index, :, sample_index]
                 writer.writerow(
                     [
                         sample_index + 1,
