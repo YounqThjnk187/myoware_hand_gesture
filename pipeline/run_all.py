@@ -1,6 +1,11 @@
 """Run the full pipeline (Steps 1-9) in order. Step 5 is fitted inside Step 6."""
 
 import argparse
+import sys
+from pathlib import Path
+
+if __package__ in (None, ""):
+    sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 from pipeline.step1_data_inspection import inspect_data
 from pipeline.step2_filtering import run_filtering

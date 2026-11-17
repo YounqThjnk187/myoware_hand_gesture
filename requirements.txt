@@ -5,3 +5,4 @@ numpy>=1.21
 scikit-learn>=1.0
 joblib>=1.0
 pandas>=2.0
+nptdms>=1.10.0
